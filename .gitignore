@@ -142,3 +142,6 @@ Desktop.ini
 .eslintcache
 /.idea/
 
+OrderStatusEnum.java
+pom.xml.releaseBackup
+release.properties
