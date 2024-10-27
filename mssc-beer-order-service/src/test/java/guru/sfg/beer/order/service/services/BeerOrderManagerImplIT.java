@@ -19,11 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
 import static com.github.jenspiegsa.wiremockextension.ManagedWireMockServer.with;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
@@ -45,11 +43,8 @@ public class BeerOrderManagerImplIT {
     ObjectMapper objectMapper;
     @Autowired
     WireMockServer wireMockServer;
-
     Customer testCustomer;
-
     UUID beerId = UUID.randomUUID();
-
     @TestConfiguration
     static class RestTemplateBuilderProvider {
         @Bean(destroyMethod = "stop")
@@ -59,14 +54,12 @@ public class BeerOrderManagerImplIT {
             return server;
         }
     }
-
     @BeforeEach
     void setUp() {
         testCustomer = customerRepository.save(Customer.builder()
                 .customerName("Test Customer")
                 .build());
     }
-
     @Test
     void testNewToAllocated() throws JsonProcessingException, InterruptedException {
         BeerDto beerDto = BeerDto.builder().id(beerId).upc("12345").build();
@@ -83,12 +76,10 @@ public class BeerOrderManagerImplIT {
         assertNotNull(savedBeerOrder);
         assertEquals(BeerOrderStatusEnum.ALLOCATED, savedBeerOrder2.getOrderStatus());
     }
-
     public BeerOrder createBeerOrder(){
         BeerOrder beerOrder = BeerOrder.builder()
                 .customer(testCustomer)
                 .build();
-
         Set<BeerOrderLine> lines = new HashSet<>();
         lines.add(BeerOrderLine.builder()
                 .beerId(beerId)
@@ -96,9 +87,7 @@ public class BeerOrderManagerImplIT {
                 .orderQuantity(1)
                 .beerOrder(beerOrder)
                 .build());
-
         beerOrder.setBeerOrderLines(lines);
-
         return beerOrder;
     }
 }
