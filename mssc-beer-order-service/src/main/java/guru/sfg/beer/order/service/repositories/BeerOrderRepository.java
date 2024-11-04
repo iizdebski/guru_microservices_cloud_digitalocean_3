@@ -1,6 +1,5 @@
 package guru.sfg.beer.order.service.repositories;
 
-
 import guru.sfg.beer.order.service.domain.BeerOrder;
 import guru.sfg.beer.order.service.domain.BeerOrderStatusEnum;
 import guru.sfg.beer.order.service.domain.Customer;

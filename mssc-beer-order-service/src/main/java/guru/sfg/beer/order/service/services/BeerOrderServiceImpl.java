@@ -67,8 +67,6 @@ public class BeerOrderServiceImpl implements BeerOrderService {
 
             log.debug("Saved Beer Order: " + beerOrder.getId());
 
-
-
             return beerOrderMapper.beerOrderToDto(savedBeerOrder);
         }
         //todo add exception type

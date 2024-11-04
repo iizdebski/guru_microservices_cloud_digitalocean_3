@@ -27,9 +27,7 @@ public class BeerOrderStateChangeInterceptor extends StateMachineInterceptorAdap
 
     @Transactional
     @Override
-    public void preStateChange(State<BeerOrderStatusEnum, BeerOrderEventEnum> state,
-        Message<BeerOrderEventEnum> message, Transition<BeerOrderStatusEnum, BeerOrderEventEnum> transition,
-                               StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachine) {
+    public void preStateChange(State<BeerOrderStatusEnum, BeerOrderEventEnum> state, Message<BeerOrderEventEnum> message, Transition<BeerOrderStatusEnum, BeerOrderEventEnum> transition, StateMachine<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachine) {
         log.debug("Pre-State Change");
 
         Optional.ofNullable(message)

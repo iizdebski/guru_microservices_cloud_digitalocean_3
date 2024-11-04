@@ -16,7 +16,6 @@ import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,7 +31,6 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     private final StateMachineFactory<BeerOrderStatusEnum, BeerOrderEventEnum> stateMachineFactory;
     private final BeerOrderRepository beerOrderRepository;
     private final BeerOrderStateChangeInterceptor beerOrderStateChangeInterceptor;
-    private final EntityManager entityManager;
 
     @Transactional
     @Override
@@ -67,7 +65,6 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
                 sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATION_FAILED);
             }
         }, () -> log.error("Order Not Found. Id: " + beerOrderId));
-
     }
 
     @Override
@@ -122,6 +119,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     @Override
     public void beerOrderPickedUp(UUID id) {
         Optional<BeerOrder> beerOrderOptional = beerOrderRepository.findById(id);
+
         beerOrderOptional.ifPresentOrElse(beerOrder -> {
             //do process
             sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.BEERORDER_PICKED_UP);
@@ -146,13 +144,16 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
     }
 
     private void awaitForStatus(UUID beerOrderId, BeerOrderStatusEnum statusEnum) {
+
         AtomicBoolean found = new AtomicBoolean(false);
         AtomicInteger loopCount = new AtomicInteger(0);
+
         while (!found.get()) {
             if (loopCount.incrementAndGet() > 10) {
                 found.set(true);
                 log.debug("Loop Retries exceeded");
             }
+
             beerOrderRepository.findById(beerOrderId).ifPresentOrElse(beerOrder -> {
                 if (beerOrder.getOrderStatus().equals(statusEnum)) {
                     found.set(true);
@@ -163,6 +164,7 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
             }, () -> {
                 log.debug("Order Id Not Found");
             });
+
             if (!found.get()) {
                 try {
                     log.debug("Sleeping for retry");

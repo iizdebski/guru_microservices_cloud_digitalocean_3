@@ -31,4 +31,5 @@ public class CustomerDto {
     private OffsetDateTime lastModifiedDate = null;
 
     private String customerName;
+
 }
