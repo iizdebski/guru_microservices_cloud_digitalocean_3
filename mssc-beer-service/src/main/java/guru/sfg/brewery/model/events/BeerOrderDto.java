@@ -2,7 +2,6 @@ package guru.sfg.brewery.model.events;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import guru.sfg.brewery.model.BeerOrderLineDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
