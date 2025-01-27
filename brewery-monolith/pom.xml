@@ -43,7 +43,7 @@
         <webjars-jquery.version>3.3.0</webjars-jquery.version>
         <wro4j.version>1.8.0</wro4j.version>
         <!--set this to your docker acct name-->
-        <docker.image.prefix>sfgbeerworks</docker.image.prefix>
+        <docker.image.prefix>dockerid0607</docker.image.prefix>
         <!--Set to name of project-->
         <docker.image.name>${artifactId}</docker.image.name>
     </properties>
